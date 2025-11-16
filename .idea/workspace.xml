@@ -5,11 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="85e1bced-cf5f-4e23-bcc4-1ec396f2bd6e" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/SkillForge.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/Student.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/services/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/StudentService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,7 +50,7 @@
     "RunOnceActivity.git.unshallow": "true",
     "git-widget-placeholder": "Eyad",
     "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "E:/Programming2/SkillForge/src/models/Student.java",
+    "last_opened_file_path": "C:/Users/MSI/Downloads/json-simple-1.1.1.jar",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
@@ -61,8 +58,8 @@
     "nodejs_package_manager_path": "npm",
     "onboarding.tips.debug.path": "E:/Programming2/SkillForge/src/Main.java",
     "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.0",
-    "project.structure.side.proportion": "0.0",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
     "settings.editor.selected.configurable": "preferences.lookFeel",
     "vue.rearranger.settings.migration": "true"
   }
@@ -85,7 +82,7 @@
       <updated>1763276260601</updated>
       <workItem from="1763276261699" duration="3922000" />
       <workItem from="1763305605095" duration="38000" />
-      <workItem from="1763305651758" duration="803000" />
+      <workItem from="1763305651758" duration="2317000" />
     </task>
     <servers />
   </component>
