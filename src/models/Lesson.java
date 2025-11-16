@@ -36,6 +36,7 @@ public class Lesson {
            "lessonID=" + lessonID +
            ", title='" + title + '\'' +
            ", content='" + content +
+            ", resources=" + resources +
            '}';
     }
 
