@@ -11,11 +11,10 @@ package backend.utils;
 
 public class AuthService {
     
-      public static User login(String email, String password) {
-          List<String> errorMessages = InputValidator.validateLoginData(email, password);
-          if(!errorMessages.isEmpty()){
-        return null;
-        }
+      public static User login(String email, String password, List<String> errorMessages) {
+          errorMessages.clear();
+          errorMessages.addAll(InputValidator.validateLoginData(email, password));
+        if(!errorMessages.isEmpty()) return null;
           List<User> users = JsonDatabaseManager.loadUsers();
         User foundUser=null;
         for(User u:users) {
@@ -37,3 +36,4 @@ public class AuthService {
         return foundUser;
       }
 }
+
