@@ -16,6 +16,10 @@ public class Course {
     private int instructorId;
     private List<Integer> students = new ArrayList<>(); //IDs
     private List<Lesson> lessons = new ArrayList<>();
+    public Course(int courseID, String title) {
+        this.courseID = courseID;
+        this.title = title;
+    }
     //setters
     public void setTitle(String title){
         this.title=title;
