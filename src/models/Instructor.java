@@ -30,4 +30,13 @@ public class Instructor extends User{
             createdCourses.remove(courseID);
         }
     }
+     @Override
+    public String toString() {
+    return "Instructor{" +
+           "userID=" + getUserID() +
+           ", name=" + getName() +
+           ", email=" + getEmail() +
+           ", createdCourses=" + createdCourses +
+           '}';
+}
 }
