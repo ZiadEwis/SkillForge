@@ -13,13 +13,16 @@ public class User {
     private String name;
     private String passwordHash;
     private String email;
+    private String role;
     //getters
     public String getName(){ return name;}
+    public String getRole(){ return role;}
     public String getEmail(){ return email;}
     public String getPasswordHash(){return passwordHash;}
     public int getUserID(){ return userID;}
     //setters
     public void setName(String name){ this.name=name;}
+    public void setRole(String role){ this.role=role;}
     public void setEmail(String email){ this.email=email;}
     public void setPasswordHash(String passwordHash){ this.passwordHash=passwordHash;}
     public void setUserID(int userID){ this.userID=userID;}
