@@ -1,13 +1,20 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package ui.components;
 
-/**
- *
- * @author DELL
- */
-public class InputField {
-    
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import java.awt.*;
+
+public class InputField extends JTextField {
+
+    public InputField() {
+        super();
+        setFont(new Font("Arial", Font.PLAIN, 14));
+        setBorder(new EmptyBorder(8, 10, 8, 10));
+    }
+
+    public InputField(int columns) {
+        super(columns);
+        setFont(new Font("Arial", Font.PLAIN, 14));
+        setBorder(new EmptyBorder(8, 10, 8, 10));
+    }
 }
