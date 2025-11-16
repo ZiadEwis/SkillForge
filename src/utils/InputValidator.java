@@ -51,8 +51,7 @@ public class InputValidator {
          if(!isValidPassword(password))
              errorMessages.add("Password must contain uppercase,lowercase,and digits");
          if(!errorMessages.isEmpty())
-            return null; // no need for further check and load if fails here
-        
+        return null; 
         return errorMessages;
         
     }
