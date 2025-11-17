@@ -1,74 +1,117 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+package test.ui;
 
-package ui;
-/**
- *
- * @author ERR0R
- */
+import test.database.JsonDatabaseManager;
+import test.model.User;
+import test.service.AuthenticationService;
 import javax.swing.*;
 import java.awt.*;
-import backend.database.JsonDatabaseManager;
-import backend.models.*;
-    public class LoginFrame extends JFrame {
-        private JTextField emailField;
-        private JPasswordField passwordField;
-        private JButton loginButton;
-        private JButton signupButton;
-        private JsonDatabaseManager db;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
-    public LoginFrame(JsonDatabaseManager db) {
-        this.db = db;
-        setTitle("Login");
-        setSize(350,180);
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLocationRelativeTo(null); // center on screen
-        setLayout(new GridLayout(3, 2, 10, 10));
-        add(new JLabel("Email:"));
-        emailField = new JTextField();
-        add(emailField);
-        add(new JLabel("Password:"));
-        passwordField = new JPasswordField();
-        add(passwordField);
-        loginButton = new JButton("Login");
-        signupButton = new JButton("Signup");
-        add(loginButton);
-        add(signupButton);
-        loginButton.addActionListener(e->login());
-        signupButton.addActionListener(e->{
-            this.dispose();
-            new SignupFrame(db).setVisible(true);
-        });
-        setVisible(true);
+public class LoginFrame extends JFrame {
+    private JTextField emailField;
+    private JPasswordField passwordField;
+    private JButton loginButton;
+    private JButton signupButton;
+    private AuthenticationService authService;
+    private JsonDatabaseManager dbManager;
+    
+    public LoginFrame(){
+        this.dbManager=new JsonDatabaseManager();
+        this.authService=new AuthenticationService(dbManager);
+        initializeUI();
     }
-
-    private void login() {
+    private void initializeUI(){
+        setTitle("Course Management System - Login");
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setSize(400,300);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+        JPanel titlePanel=new JPanel();
+        titlePanel.add(new JLabel("Login", SwingConstants.CENTER));
+        titlePanel.setFont(new Font("Arial", Font.BOLD, 18));
+        JPanel formPanel=new JPanel(new GridBagLayout());
+        formPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        GridBagConstraints gbc=new GridBagConstraints();
+        gbc.insets=new Insets(10,10,10,10);
+        gbc.anchor=GridBagConstraints.WEST;
+        gbc.gridx =0;
+        gbc.gridy = 0;
+        formPanel.add(new JLabel("Email:"), gbc);// emial
+        gbc.gridx = 1;
+        gbc.fill = GridBagConstraints.HORIZONTAL;
+        gbc.weightx = 1.0;
+        emailField = new JTextField(20);
+        formPanel.add(emailField, gbc);
+        gbc.gridx=0;
+        gbc.gridy= 1;
+        gbc.fill =GridBagConstraints.NONE;
+        gbc.weightx =0;
+        formPanel.add(new JLabel("Password:"), gbc); // password
+        gbc.gridx =1;
+        gbc.fill =GridBagConstraints.HORIZONTAL;
+        gbc.weightx =1.0;
+        passwordField = new JPasswordField(20);
+        formPanel.add(passwordField, gbc);
+        JPanel buttonPanel = new JPanel(new FlowLayout());
+        loginButton=new JButton("Login");
+        signupButton = new JButton("Sign Up");
+        buttonPanel.add(loginButton);
+        buttonPanel.add(signupButton);
+        add(titlePanel, BorderLayout.NORTH);
+        add(formPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+ 
+        loginButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            handleLogin();
+            }
+        });
+        signupButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            openSignupFrame();
+            }
+        });
+        passwordField.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+            handleLogin();
+            }
+        });
+    }
+    private void handleLogin() {
         String email = emailField.getText().trim();
         String password = new String(passwordField.getPassword());
-        if(email.isEmpty() || password.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please enter email and password.");
+        
+        if (email.isEmpty() || password.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please enter both email and password.", 
+                    "Validation Error", JOptionPane.ERROR_MESSAGE);
             return;
+        }  
+        try {
+            User user=authService.login(email, password);
+            String role=user.getRole();
+            dispose();
+            if ("STUDENT".equals(role)){
+                new StudentDashboardFrame(authService,dbManager).setVisible(true);
+            } else if ("INSTRUCTOR".equals(role)) {
+                new InstructorDashboardFrame(authService,dbManager).setVisible(true);
+            }
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this,e.getMessage(), 
+                    "Login Error", JOptionPane.ERROR_MESSAGE);
         }
-        User user = db.findByEmail(email);
-        if(user == null) {
-            JOptionPane.showMessageDialog(this,"User not found.");
-            return;
-        }
-        if(!user.getPasswordHash().equals(Utils.hashSHA256(password))) {
-            JOptionPane.showMessageDialog(this, "Incorrect password.");
-            return;
-        }
-        JOptionPane.showMessageDialog(this, "Login successful! Welcome " + user.getName());
-        this.dispose();
-        if(user.getRole().equalsIgnoreCase("Student")) {
-            new StudentDashboard(user,db).setVisible(true);
-        } else if(user.getRole().equalsIgnoreCase("Instructor")) {
-            new InstructorDashboard(user,db).setVisible(true);
-        }
-        else{
-            JOptionPane.showMessageDialog(this, "Unknown role: " + user.getRole());
-        }
+    }
+    private void openSignupFrame() {
+        SignupFrame signupFrame=new SignupFrame(authService,dbManager);
+        signupFrame.setVisible(true);
+    }
+    public AuthenticationService getAuthService() {
+        return authService;
+    }
+    public JsonDatabaseManager getDbManager() {
+        return dbManager;
     }
 }
